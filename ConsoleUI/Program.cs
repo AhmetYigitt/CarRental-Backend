@@ -14,7 +14,7 @@ namespace ConsoleUI
 
             //Ekleme Testi
             carManager.Add(new Car { CarId = 7, BrandId = 2, ColorId = 3, DailyPrice = 450500, Description = "Yeni Eklenen Araba", ModelYear = 2021 });
-            //getirme Testi
+            //Getirme Testi
             foreach (var car in carManager.GetAll())
             {
                 Console.WriteLine("Araba Tarifi: " + car.Description + "\nAraba Fiyatı: " + car.DailyPrice +
