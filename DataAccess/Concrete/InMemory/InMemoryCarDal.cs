@@ -47,8 +47,6 @@ namespace DataAccess.Concrete.InMemory
             carToUpdate.DailyPrice = car.DailyPrice;
             carToUpdate.Description = car.Description;
             carToUpdate.ModelYear = car.ModelYear;
-
-            car = carToUpdate;
         }
 
         List<Car> ICarDal.GetByBrandId(int brandId)
