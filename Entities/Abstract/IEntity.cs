@@ -6,5 +6,6 @@ namespace Entities.Abstract
 {
     interface IEntity
     {
+
     }
 }
