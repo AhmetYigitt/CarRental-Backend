@@ -31,25 +31,25 @@ namespace ConsoleUI
                 switch (choose)
                 {
                     case 1:
-                        MyAddOperation(carManager);
+                        MyCarAddOperation(carManager);
                         Console.WriteLine("\nMenüye Dönmek İçin Enter'a Basınız");
                         Console.ReadLine();
                         Console.Clear();
                         break;
                     case 2:
-                        MyDeleteOperation(carManager);
+                        MyCarDeleteOperation(carManager);
                         Console.WriteLine("\nMenüye Dönmek İçin Enter'a Basınız");
                         Console.ReadLine();
                         Console.Clear();
                         break;
                     case 3:
-                        MyUpdateOperation(carManager);
+                        MyCarUpdateOperation(carManager);
                         Console.WriteLine("\nMenüye Dönmek İçin Enter'a Basınız");
                         Console.ReadLine();
                         Console.Clear();
                         break;
                     case 4:
-                        MyListOperation(carManager);
+                        MyCarListOperation(carManager);
                         Console.WriteLine("\nMenüye Dönmek İçin Enter'a Basınız");
                         Console.ReadLine();
                         Console.Clear();
@@ -193,7 +193,7 @@ namespace ConsoleUI
             }
         }
 
-        private static void MyUpdateOperation(CarManager carManager)
+        private static void MyCarUpdateOperation(CarManager carManager)
         {
             Console.Write("Arabanın Id: "); int Id = int.Parse(Console.ReadLine());
             Console.Write("Arabanın Marka Id: "); int brandId = int.Parse(Console.ReadLine());
@@ -213,7 +213,7 @@ namespace ConsoleUI
             });
         }
 
-        private static void MyListOperation(CarManager carManager)
+        private static void MyCarListOperation(CarManager carManager)
         {
             foreach (var car in carManager.GetAll())
             {
@@ -221,7 +221,7 @@ namespace ConsoleUI
             }
         }
 
-        private static void MyDeleteOperation(CarManager carManager)
+        private static void MyCarDeleteOperation(CarManager carManager)
         {
             Console.WriteLine("Id  Araba\n-------------");
             foreach (var car in carManager.GetAll())
@@ -232,7 +232,7 @@ namespace ConsoleUI
             carManager.Delete(new Car { CarId = deletedCarId });
         }
 
-        private static void MyAddOperation(CarManager carManager)
+        private static void MyCarAddOperation(CarManager carManager)
         {
             Console.Write("Arabanın Marka Id: "); int brandId = int.Parse(Console.ReadLine());
             Console.Write("Arabanın Color Id: "); int colorId = int.Parse(Console.ReadLine());
