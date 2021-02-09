@@ -15,15 +15,15 @@ namespace ConsoleUI
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
 
-
             int choose;
             bool temp = true;
-            while(temp){
+            while (temp)
+            {
 
                 Console.WriteLine("----------MENU----------");
                 Console.WriteLine("1)Araba Ekleme\n2)Araba Silme\n3)Araba Güncelleme\n4)Tüm Arabaları Gösterme\n5)Arabaları Marka Id'sine Göre Listeleme" +
                     "\n6)Arabaları Renk Id'sine Göre Listeleme\n7)Tüm Renkleri Görüntüleme\n8)Renk Ekleme\n9)Renk Güncelleme\n" +
-                    "10)Tüm Markaları Görüntüleme\n11)Marka Ekleme\n12)Marka Güncelleme\n13)Çıkış");
+                    "10)Tüm Markaları Görüntüleme\n11)Marka Ekleme\n12)Marka Güncelleme\n13)Arabların Detaylı Listesi\n14)Çıkış");
 
                 Console.Write("Seçiminiz: ");
                 choose = int.Parse(Console.ReadLine());
@@ -105,6 +105,12 @@ namespace ConsoleUI
                         Console.Clear();
                         break;
                     case 13:
+                        MyGetCarDetailsOperation(carManager);
+                        Console.WriteLine("\nMenüye Dönmek İçin Enter'a Basınız");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+                    case 14:
                         Console.WriteLine("Sistemden Çıkış Yaptınız");
                         temp = false;
                         break;
@@ -114,6 +120,15 @@ namespace ConsoleUI
                         Console.Clear();
                         break;
                 }
+            }
+        }
+
+        private static void MyGetCarDetailsOperation(CarManager carManager)
+        {
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine("\nAraba Açıklaması: {0}\nAraba Rengi: {1}\nAraba Markası: {2}\nArabanın Günlük Fiyatı: {3}tl\nArabanın Çıkış Yılı: {4}",
+                    car.Description, car.ColorName, car.BrandName, car.DailyPrice, car.ModelYear);
             }
         }
 
@@ -173,9 +188,9 @@ namespace ConsoleUI
                 Console.WriteLine("{0}   {1}", color.ColorId, color.ColorName);
             }
             Console.Write("İstediğiniz Renkteki Araçları Görmek  İçin Yukarıdan Renk Id Seçiniz: "); int Id = int.Parse(Console.ReadLine());
-            foreach (var car in carManager.GetCarsByBrandId(Id))
+            foreach (var car in carManager.GetCarsByColorId(Id))
             {
-                Console.WriteLine("\nAraba Özelliği: {0}\nAraba Çıkış Yılı: {1}\nAraba Fiyatı: {2}", car.Description, car.ModelYear, car.DailyPrice);
+                Console.WriteLine("\nAraba Özelliği: {0}\nAraba Çıkış Yılı: {1}\nAraba Günlük Fiyatı: {2}tl", car.Description, car.ModelYear, car.DailyPrice);
             }
         }
 
@@ -189,7 +204,7 @@ namespace ConsoleUI
             Console.Write("İstediğiniz Markadaki Araçları Görmek  İçin Yukarıdan Marka Id Seçiniz: "); int Id = int.Parse(Console.ReadLine());
             foreach (var car in carManager.GetCarsByBrandId(Id))
             {
-                Console.WriteLine("\nAraba Özelliği: {0}\nAraba Çıkış Yılı: {1}\nAraba Fiyatı: {2}", car.Description, car.ModelYear, car.DailyPrice);
+                Console.WriteLine("\nAraba Özelliği: {0}\nAraba Çıkış Yılı: {1}\nAraba Günlük Fiyatı: {2}tl", car.Description, car.ModelYear, car.DailyPrice);
             }
         }
 
@@ -217,7 +232,8 @@ namespace ConsoleUI
         {
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine("\nAraba Özelliği: {0}\nAraba Çıkış Yılı: {1}\nAraba Fiyatı: {2}", car.Description, car.ModelYear, car.DailyPrice);
+
+                Console.WriteLine("\nAraba Açıklaması: {0}\nAraba Günlük Fiyat: {1}tl\nAraba Çıkış Yılı: {2}", car.Description, car.DailyPrice, car.ModelYear);
             }
         }
 
@@ -240,7 +256,7 @@ namespace ConsoleUI
             Console.Write("Arabanın Fiyatı: "); decimal dailyPrice = decimal.Parse(Console.ReadLine());
             Console.Write("Arabaının Tanımı: "); string description = Console.ReadLine();
 
-            carManager.Add(new Car {BrandId = brandId, ColorId = colorId, DailyPrice = dailyPrice, ModelYear = modelYear, Description = description });
+            carManager.Add(new Car { BrandId = brandId, ColorId = colorId, DailyPrice = dailyPrice, ModelYear = modelYear, Description = description });
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Entities.Abstract;
+﻿using Core.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

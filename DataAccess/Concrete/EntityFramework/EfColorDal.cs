@@ -1,62 +1,13 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfColorDal : IColorDal
+    public class EfColorDal : EfEntityRepositoryBase<Color, MyCarDatabaseContext>, IColorDal
     {
-        public void Add(Color entity)
-        {
-            using (MyCarDatabaseContext context = new MyCarDatabaseContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-            }
-        }
-
-        public void Delete(Color entity)
-        {
-            using (MyCarDatabaseContext context = new MyCarDatabaseContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
-
-        public Color Get(Expression<Func<Color, bool>> filter)
-        {
-            using (MyCarDatabaseContext context = new MyCarDatabaseContext())
-            {
-                return context.Set<Color>().SingleOrDefault(filter);
-            }
-        }
-
-        public List<Color> GetAll(Expression<Func<Color, bool>> filter = null)
-        {
-            using (MyCarDatabaseContext context = new MyCarDatabaseContext())
-            {
-                return filter == null
-                    ? context.Set<Color>().ToList()
-                    : context.Set<Color>().Where(filter).ToList();
-            }
-        }
-
-        public void Update(Color entity)
-        {
-            using (MyCarDatabaseContext context = new MyCarDatabaseContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
+    
     }
 }
