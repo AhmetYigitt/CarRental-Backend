@@ -9,6 +9,7 @@ using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
+    //Test class before learning entity framework
     public class InMemoryCarDal : ICarDal
     {
         List<Car> _cars;
