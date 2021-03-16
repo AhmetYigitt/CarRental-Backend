@@ -152,7 +152,7 @@ namespace ConsoleUI
             Console.WriteLine("Güncellemek İstediğiniz Markanın Id Ve Adını Giriniz");
             Console.Write("Id: "); int Id = int.Parse(Console.ReadLine());
             Console.Write("Adı: "); string brandName = Console.ReadLine();
-            brandManager.Update(new Brand { BrandId = Id, BrandName = brandName });
+            brandManager.Update(new Brand { Id = Id, BrandName = brandName });
         }
 
         private static void MyBrandAddOperation(BrandManager brandManager)
@@ -167,7 +167,7 @@ namespace ConsoleUI
             Console.WriteLine("Id  Marka Adı\n-------------");
             foreach (var brand in brandManager.GetAll().Data)
             {
-                Console.WriteLine("{0}   {1}", brand.BrandId, brand.BrandName);
+                Console.WriteLine("{0}   {1}", brand.Id, brand.BrandName);
             }
         }
 
@@ -176,7 +176,7 @@ namespace ConsoleUI
             Console.WriteLine("Güncellemek İstediğiniz Rengin Id Ve Adını Giriniz");
             Console.Write("Id: "); int Id = int.Parse(Console.ReadLine());
             Console.Write("Adı: "); string colorName = Console.ReadLine();
-            colorManager.Update(new Color { ColorId = Id, ColorName = colorName });
+            colorManager.Update(new Color { Id = Id, ColorName = colorName });
         }
 
         private static void MyColorAddOperation(ColorManager colorManager)
@@ -191,7 +191,7 @@ namespace ConsoleUI
             Console.WriteLine("Id   Renk\n-------------");
             foreach (var color in colorManager.GetAll().Data)
             {
-                Console.WriteLine("{0}   {1}", color.ColorId, color.ColorName);
+                Console.WriteLine("{0}   {1}", color.Id, color.ColorName);
             }
         }
 
@@ -200,7 +200,7 @@ namespace ConsoleUI
             Console.WriteLine("Id   Renk\n-------------");
             foreach (var color in colorManager.GetAll().Data)
             {
-                Console.WriteLine("{0}   {1}", color.ColorId, color.ColorName);
+                Console.WriteLine("{0}   {1}", color.Id, color.ColorName);
             }
             Console.Write("İstediğiniz Renkteki Araçları Görmek  İçin Yukarıdan Renk Id Seçiniz: "); int Id = int.Parse(Console.ReadLine());
             foreach (var car in carManager.GetCarsByColorId(Id).Data)
@@ -214,7 +214,7 @@ namespace ConsoleUI
             Console.WriteLine("Id  Marka Adı\n-------------");
             foreach (var brand in brandManager.GetAll().Data)
             {
-                Console.WriteLine("{0}   {1}", brand.BrandId, brand.BrandName);
+                Console.WriteLine("{0}   {1}", brand.Id, brand.BrandName);
             }
             Console.Write("İstediğiniz Markadaki Araçları Görmek  İçin Yukarıdan Marka Id Seçiniz: "); int Id = int.Parse(Console.ReadLine());
             foreach (var car in carManager.GetCarsByBrandId(Id).Data)
@@ -234,7 +234,7 @@ namespace ConsoleUI
 
             carManager.Update(new Car
             {
-                CarId = Id,
+                Id = Id,
                 BrandId = brandId,
                 ColorId = colorId,
                 DailyPrice = dailyPrice,
@@ -258,10 +258,10 @@ namespace ConsoleUI
             Console.WriteLine("Id  Araba\n-------------");
             foreach (var car in carManager.GetAll().Data)
             {
-                Console.WriteLine("{0}   {1}", car.CarId, car.Description);
+                Console.WriteLine("{0}   {1}", car.Id, car.Description);
             }
             Console.Write("Silmek İstediğiniz Arabanın Id: "); int deletedCarId = int.Parse(Console.ReadLine());
-            carManager.Delete(new Car { CarId = deletedCarId });
+            carManager.Delete(new Car { Id = deletedCarId });
         }
 
         private static void MyCarAddOperation(CarManager carManager)
