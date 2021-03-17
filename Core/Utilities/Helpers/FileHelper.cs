@@ -6,65 +6,88 @@ using System.IO;
 using System.Text;
 
 namespace Core.Utilities.Helpers
-{
+{ 
     public class FileHelper
-    {
-        public static string Add(IFormFile file)
         {
-            var sourcepath = Path.GetTempFileName();
-            if (file.Length > 0)
+            public static string AddAsync(IFormFile file)
             {
-                using (var stream = new FileStream(sourcepath, FileMode.Create))
+                var result = newPath(file);
+                try
                 {
-                    file.CopyTo(stream);
+                    var sourcepath = Path.GetTempFileName();
+                    if (file.Length > 0)
+                        using (var stream = new FileStream(sourcepath, FileMode.Create))
+                            file.CopyTo(stream);
+
+                    File.Move(sourcepath, result.newPath);
                 }
-            }
-            var result = newPath(file);
-            File.Move(sourcepath, result);
-            return result;
-        }
-
-
-        public static IResult Delete(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
-
-            return new SuccessResult();
-        }
-
-        public static string Update(string sourcePath, IFormFile file)
-        {
-            var result = newPath(file);
-            if (sourcePath.Length > 0)
-            {
-                using (var stream = new FileStream(result, FileMode.Create))
+                catch (Exception exception)
                 {
-                    file.CopyTo(stream);
+
+                    return exception.Message;
                 }
+
+                return result.Path2;
             }
 
-            File.Delete(sourcePath);
-            return result;
-        }
+            public static string UpdateAsync(string sourcePath, IFormFile file)
+            {
+                var result = newPath(file);
+
+                try
+                {
+                    //File.Copy(sourcePath,result);
+
+                    if (sourcePath.Length > 0)
+                    {
+                        using (var stream = new FileStream(result.newPath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+                    }
+
+                    File.Delete(sourcePath);
+                }
+                catch (Exception excepiton)
+                {
+                    return excepiton.Message;
+                }
+
+                return result.Path2;
+            }
+
+            public static IResult DeleteAsync(string path)
+            {
+                try
+                {
+                    File.Delete(path);
+                }
+                catch (Exception exception)
+                {
+                    return new ErrorResult(exception.Message);
+                }
+
+                return new SuccessResult();
+            }
+
+            public static (string newPath, string Path2) newPath(IFormFile file)
+            {
+                FileInfo ff = new FileInfo(file.FileName);
+                string fileExtension = ff.Extension;
+
+                var creatingUniqueFilename = Guid.NewGuid().ToString("N")
+                                             + "_" + DateTime.Now.Month + "_"
+                                             + DateTime.Now.Day + "_"
+                                             + DateTime.Now.Year + fileExtension;
 
 
-        public static string newPath(IFormFile file)
-        {
-            FileInfo ff = new FileInfo(file.FileName);
-            string fileExtension = ff.Extension;
+                string path = Environment.CurrentDirectory + @"\wwwroot\Images";
 
-            string path = Environment.CurrentDirectory + @"\Images";
-            var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + fileExtension;
+                string result = $@"{path}\{creatingUniqueFilename}";
 
-            string result = $@"{path}\{newPath}";
-            return result;
-        }
+                return (result, $"\\Images\\{creatingUniqueFilename}");
+            }
+
     }
+
 }

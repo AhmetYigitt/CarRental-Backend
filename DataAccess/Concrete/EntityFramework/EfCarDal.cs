@@ -16,12 +16,13 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (MyCarDatabaseContext context = new MyCarDatabaseContext())
             {
+                
                 var result = from car in filter is null ? context.Cars : context.Cars.Where(filter)
                              join brand in context.Brands 
                              on car.BrandId equals brand.Id 
                              join color in context.Colors 
                              on car.ColorId equals color.Id
-                             
+                                 
                              select new CarDetailDto
                              {
                                  CarId = car.Id,
@@ -30,10 +31,13 @@ namespace DataAccess.Concrete.EntityFramework
                                  DailyPrice = car.DailyPrice,
                                  Description = car.Description,
                                  ModelYear = car.ModelYear,
-                                 
+                                 ImagePath = (from a in context.CarImages where a.CarId == car.Id select a.ImagePath).FirstOrDefault()
+
                              };
                 return result.ToList();
             }
         }
+      
+        
     }
 }

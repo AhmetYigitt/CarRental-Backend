@@ -12,6 +12,7 @@ using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Business.Concrete
 {
@@ -56,12 +57,23 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
+            var results = _carDal.GetCarDetails();
+
+            foreach (var result in results)
+            {
+                if (result.ImagePath == null)
+                {
+                    result.ImagePath = @"\Images\default.jpg";
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(results);
         }
 
         [CacheAspect]
         public IDataResult<List<Car>> GetCarsByBrandId(int brandId)
         {
+
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
         }
 
@@ -80,17 +92,46 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p => p.BrandId == brandId));
+            var results = _carDal.GetCarDetails(p => p.BrandId == brandId);
+
+            foreach (var result in results)
+            {
+                if (result.ImagePath == null)
+                {
+                    result.ImagePath = @"\Images\default.jpg";
+                }
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(results);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetailsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p => p.ColorId == colorId));
+            var results = _carDal.GetCarDetails(p => p.ColorId == colorId);
+
+            foreach (var result in results)
+            {
+                if (result.ImagePath == null)
+                {
+                    result.ImagePath = @"\Images\default.jpg";
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(results);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetail(int carId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p=>p.Id==carId));
+            var results = _carDal.GetCarDetails(p => p.Id == carId);
+
+            foreach (var result in results)
+            {
+                if (result.ImagePath == null)
+                {
+                    result.ImagePath = @"\Images\default.jpg";
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(results);
         }
     }
 }
