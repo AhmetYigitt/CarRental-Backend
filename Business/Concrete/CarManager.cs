@@ -133,5 +133,20 @@ namespace Business.Concrete
 
             return new SuccessDataResult<List<CarDetailDto>>(results);
         }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetailsByBrandAndColorId(int brandId, int colorId)
+        {
+            var results = _carDal.GetCarDetails(filter => filter.BrandId == brandId && filter.ColorId == colorId);
+
+            foreach (var result in results)
+            {
+                if (result.ImagePath == null)
+                {
+                    result.ImagePath = @"\Images\default.jpg";
+                }
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(results);
+        }
     }
 }

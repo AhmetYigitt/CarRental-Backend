@@ -22,30 +22,23 @@ namespace Business.Concrete
         }
 
         public IResult Add(Rental rental)
-        {
-            IResult result = BusinessRules.Run(CheckCarReturnDate(rental));
-
-            if (result !=null)
-            {
-                return result;
-            }
-
-            rental.RentDate = DateTime.Now;
+        { 
+            
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.CarRented);   
         }
 
-        public IResult CarDelivery(int carId)
-        {
-            var updatedRental = (_rentalDal.GetAll(c => c.CarId == carId)).LastOrDefault();
-            if (updatedRental.ReturnDate != null)
-            {
-                return new ErrorResult(Messages.ErrorCarDelivery);
-            }
-            updatedRental.ReturnDate = DateTime.Now;
-            _rentalDal.Update(updatedRental);
-            return new SuccessResult(Messages.CarDeliverd);
-        }
+        //public IResult CarDelivery(int carId)
+        //{
+        //    var updatedRental = (_rentalDal.GetAll(c => c.CarId == carId)).LastOrDefault();
+        //    if (updatedRental.ReturnDate != null)
+        //    {
+        //        return new ErrorResult(Messages.ErrorCarDelivery);
+        //    }
+        //    updatedRental.ReturnDate = DateTime.Now;
+        //    _rentalDal.Update(updatedRental);
+        //    return new SuccessResult(Messages.CarDeliverd);
+        //}
 
         public IResult Delete(Rental rental)
         {
@@ -79,13 +72,21 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        private IResult CheckCarReturnDate(Rental rental)
+        public IResult CheckCarRentDate(Rental rental)
         {
-            var result = _rentalDal.GetRentCarDetails(p => p.CarId == rental.CarId && p.ReturnDate == null);
-            if (result.Count > 0)
+            var results = _rentalDal.GetRentCarDetails(p => p.CarId == rental.CarId);
+
+
+            foreach (var result in results)
             {
-                return new ErrorResult(Messages.ReturnDateInavlid);
+                if ((rental.RentDate >= result.RentDate && rental.RentDate <= result.ReturnDate) ||
+                    (rental.ReturnDate >= result.RentDate && rental.ReturnDate <= result.ReturnDate) ||
+                    (result.RentDate >= rental.RentDate && result.RentDate <= rental.ReturnDate))
+                {
+                    return new ErrorResult(Messages.ReturnDateInavlid);
+                }
             }
+
             return new SuccessResult();
         }
     }

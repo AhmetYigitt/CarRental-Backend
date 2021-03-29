@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+           /* CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             ColorManager colorManager = new ColorManager(new EfColorDal());
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
@@ -135,10 +135,10 @@ namespace ConsoleUI
                         Console.Clear();
                         break;
                 }
-            }
+            }*/
         }
 
-        private static void MyGetCarDetailsOperation(CarManager carManager)
+       /* private static void MyGetCarDetailsOperation(CarManager carManager)
         {
             foreach (var car in carManager.GetCarDetails().Data)
             {
@@ -273,6 +273,6 @@ namespace ConsoleUI
             Console.Write("Arabaının Tanımı: "); string description = Console.ReadLine();
 
             Console.WriteLine(carManager.Add(new Car { BrandId = brandId, ColorId = colorId, DailyPrice = dailyPrice, ModelYear = modelYear, Description = description }).Message);
-        }
+        }*/
     }
 }
