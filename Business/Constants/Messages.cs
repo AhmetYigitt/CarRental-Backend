@@ -26,5 +26,6 @@ namespace Business.Constants
         public static string AccessTokenCreated = "Token oluşturuldu";
         public static string UserRegistered = "Kullanıcı keydedildi";
         public static string PaymentSuccess = "Ödeme Başarılı";
+        public static string ColorDeleted = "Renk Silindi";
     }
 }
