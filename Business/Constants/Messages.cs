@@ -15,7 +15,6 @@ namespace Business.Constants
         public static string CarUpdated = "Araba güncellendi";
         public static string ReturnDateInavlid = "Kiralamak İstediğiniz Araba Henüz Teslim Edilmemiştir";
         public static string CarRented = "Araba Kiralandı";
-        public static string CarDeliverd = "Araba teslim edildi";
         public static string ErrorCarDelivery = "Araba Teslim Etme İşlemi Başarısız";
         public static string CarImageLimitExceed = "bir arabanın en fazla beş resmi olabilir";
         public static string AuthorizationDenied = "erişim reddedildi";
@@ -23,7 +22,7 @@ namespace Business.Constants
         public static string PasswordError = "Parola hatalı";
         public static string SuccessfulLogin = "Giriş başarılı";
         public static string UserAlreadyExists = "Kullanıcı sisteme önceden kayıtlı";
-        public static string AccessTokenCreated = "Token oluşturuldu";
+        public static string AccessTokenCreated = "Giriş Başarılı";
         public static string UserRegistered = "Kullanıcı keydedildi";
         public static string PaymentSuccess = "Ödeme Başarılı";
         public static string ColorDeleted = "Renk Silindi";
